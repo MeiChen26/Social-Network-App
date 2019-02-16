@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Form, Input, Button, 
+    Form, Input,
   } from 'antd';
   
   class RegistrationForm extends React.Component {
@@ -56,24 +56,13 @@ import {
           sm: { span: 16 },
         },
       };
-      const tailFormItemLayout = {
-        wrapperCol: {
-          xs: {
-            span: 24,
-            offset: 0,
-          },
-          sm: {
-            span: 16,
-            offset: 8,
-          },
-        },
-      };
+    
     
   
       
   
       return (
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} className="register">
           <Form.Item
             {...formItemLayout}
             label='Username'
