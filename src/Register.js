@@ -1,8 +1,7 @@
 import React from 'react';
-import {
-    Form, Input,
-  } from 'antd';
-  
+import { Form, Input, Button, message } from 'antd';
+import { API_ROOT } from './constants';
+
   class RegistrationForm extends React.Component {
     state = {
       confirmDirty: false,
@@ -14,6 +13,28 @@ import {
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+           // send request
+       fetch(`${API_ROOT}/signup`, {
+        method: 'POST',
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password,
+        }),
+      }).then((response) => {
+          if (response.ok) {
+            return response.text();
+          }
+          throw new Error(response.statusText);
+        })
+        .then((data) => {
+          console.log(data);
+          message.success('Registration Succeed!');
+        })
+        .catch((e) => {
+          console.log(e);
+          message.error('Registration Failed.');
+        });
+
         }
       });
     }
@@ -57,7 +78,19 @@ import {
         },
       };
     
-    
+      const tailFormItemLayout = {
+        wrapperCol: {
+          xs: {
+            span: 24,
+            offset: 0,
+          },
+          sm: {
+            span: 16,
+            offset: 8,
+          },
+        },
+      };
+   
   
       
   
@@ -101,7 +134,9 @@ import {
               <Input type="password" onBlur={this.handleConfirmBlur} />
             )}
           </Form.Item>
-         
+          <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">Register</Button>
+        </Form.Item>
         </Form>
       );
     }
